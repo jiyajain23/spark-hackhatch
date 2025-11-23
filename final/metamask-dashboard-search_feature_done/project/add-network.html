@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Base Sepolia to MetaMask</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #0052FF;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+        button:hover {
+            background: #0041CC;
+        }
+        .info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        h1 { color: #333; }
+        .success {
+            background: #4caf50;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🦊 Add Base Sepolia to MetaMask</h1>
+        
+        <div class="info">
+            <strong>Network Details:</strong><br>
+            Network Name: Base Sepolia<br>
+            Chain ID: 84532<br>
+            RPC URL: https://sepolia.base.org<br>
+            Currency: ETH
+        </div>
+
+        <button id="addNetwork">Add Base Sepolia to MetaMask</button>
+        
+        <div class="success" id="success">
+            ✅ Base Sepolia network added successfully!
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('addNetwork').addEventListener('click', async () => {
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    await window.ethereum.request({
+                        method: 'wallet_addEthereumChain',
+                        params: [{
+                            chainId: '0x14a34', // 84532 in hex
+                            chainName: 'Base Sepolia',
+                            nativeCurrency: {
+                                name: 'Ethereum',
+                                symbol: 'ETH',
+                                decimals: 18
+                            },
+                            rpcUrls: ['https://sepolia.base.org'],
+                            blockExplorerUrls: ['https://sepolia.basescan.org']
+                        }]
+                    });
+                    document.getElementById('success').style.display = 'block';
+                    alert('✅ Base Sepolia added! Now switch to this network in MetaMask.');
+                } catch (error) {
+                    alert('Error: ' + error.message);
+                }
+            } else {
+                alert('MetaMask is not installed! Please install MetaMask extension first.');
+            }
+        });
+    </script>
+</body>
+</html>
